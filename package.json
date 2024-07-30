@@ -13,6 +13,10 @@
   },
   "dependencies": {
     "@auth0/auth0-react": "^2.2.4",
+    "@emotion/react": "^11.13.0",
+    "@emotion/styled": "^11.13.0",
+    "@mui/icons-material": "^5.16.6",
+    "@mui/material": "^5.16.6",
     "@storybook/addon-actions": "^8.1.11",
     "@storybook/addon-backgrounds": "^8.1.11",
     "filesize": "^10.1.2",
