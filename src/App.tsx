@@ -1,35 +1,37 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import "./App.css";
+import Register from "./Register";
+import Home from "./Home";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { Auth0Provider } from "@auth0/auth0-react";
+import ProtectedRoute from "./ProtectedRoute";
+import Hello from "./Hello";
+
+const domain = "dev-3iua4wp6ipn277tf.us.auth0.com";
+const clientId = "qQms35tNWo4lAenciwG0UiZbBE3lqPWP";
 
 function App() {
-  const [count, setCount] = useState(0)
-
   return (
-    <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+    <Auth0Provider
+      domain={domain}
+      clientId={clientId}
+      authorizationParams={{ redirect_uri: window.location.origin }}
+    >
+      <Router>
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route
+            path="hello"
+            element={
+              <ProtectedRoute>
+                <Hello />
+              </ProtectedRoute>
+            }
+          />
+          <Route path="register" element={<Register />} />
+        </Routes>
+      </Router>
+    </Auth0Provider>
+  );
 }
 
-export default App
+export default App;
