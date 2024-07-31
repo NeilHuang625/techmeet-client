@@ -1,10 +1,9 @@
-import "./App.css";
 import Register from "./Register";
 import Home from "./Home";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { Auth0Provider } from "@auth0/auth0-react";
-import ProtectedRoute from "./ProtectedRoute";
-import Hello from "./Hello";
+import ProtectedRoute from "./Components/ProtectedRoute";
+import CreateEvent from "./CreateEvent";
 
 const domain = "dev-3iua4wp6ipn277tf.us.auth0.com";
 const clientId = "qQms35tNWo4lAenciwG0UiZbBE3lqPWP";
@@ -20,10 +19,10 @@ function App() {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route
-            path="hello"
+            path="create-event"
             element={
               <ProtectedRoute>
-                <Hello />
+                <CreateEvent />
               </ProtectedRoute>
             }
           />
