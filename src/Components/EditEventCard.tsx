@@ -7,8 +7,25 @@ import {
   Typography,
 } from "@mui/material";
 import dayjs from "dayjs";
+import { useNavigate } from "react-router-dom";
 
-const EditEventCard = ({ event, onDelete }) => {
+interface EditEventCardProps {
+  event: {
+    eventId: string;
+    title: string;
+    description: string;
+    startTime: string;
+    endTime: string;
+    location: string;
+    maxParticipants: number;
+    imagePath: string;
+  };
+  onDelete: (eventId: string) => void;
+}
+
+const EditEventCard = ({ event, onDelete }: EditEventCardProps) => {
+  const navigate = useNavigate();
+
   return (
     <Card>
       <CardHeader title={event.title} />
@@ -41,7 +58,13 @@ const EditEventCard = ({ event, onDelete }) => {
         />
       </CardContent>
       <CardActions>
-        <Button size="small" color="primary">
+        <Button
+          size="small"
+          color="primary"
+          onClick={() =>
+            navigate("/update-event", { state: { eventId: event.eventId } })
+          }
+        >
           Edit
         </Button>
         <Button

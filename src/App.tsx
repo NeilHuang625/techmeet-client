@@ -8,8 +8,10 @@ import EditEvents from "./EditEvents";
 import { AppContext } from "./Contexts/AppContext";
 import axios from "axios";
 import { useEffect, useState } from "react";
+import UpdateEvent from "./UpdateEvent";
 
 export interface AppEvent {
+  eventId: string;
   title: string;
   description: string;
   startTime: string;
@@ -48,6 +50,14 @@ function App() {
               element={
                 <ProtectedRoute>
                   <CreateEvent />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="update-event"
+              element={
+                <ProtectedRoute>
+                  <UpdateEvent />
                 </ProtectedRoute>
               }
             />

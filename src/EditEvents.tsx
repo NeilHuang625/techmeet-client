@@ -15,7 +15,7 @@ const EditEvents = () => {
   useEffect(() => {
     if (!isLoading) {
       console.log(user);
-      setUserId(user?.sub);
+      setUserId(user?.sub || null);
     }
   }, [isLoading, user]);
 

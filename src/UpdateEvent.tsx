@@ -1,39 +1,42 @@
-import { useState, useContext } from "react";
+import React, { useContext, useEffect, useState } from "react";
+import { useLocation } from "react-router-dom";
+import { AppContext } from "./Contexts/AppContext";
 import {
+  Container,
+  Box,
+  Typography,
   TextField,
   Button,
-  Box,
-  Container,
-  Typography,
-  Input,
   Grid,
   InputAdornment,
-  InputLabel,
+  Input,
   Stack,
+  InputLabel,
 } from "@mui/material";
-import LocationOnIcon from "@mui/icons-material/LocationOn";
 import NavBar from "./Components/NavBar";
-import dayjs from "dayjs";
+import LocationOnIcon from "@mui/icons-material/LocationOn";
 import axios from "axios";
-import { useAuth0 } from "@auth0/auth0-react";
 import { useNavigate } from "react-router-dom";
-import { AppContext } from "./Contexts/AppContext";
+import { useAuth0 } from "@auth0/auth0-react";
 
-const CreateEvent = () => {
-  const { user, isLoading } = useAuth0();
+const UpdateEvent = () => {
+  const { events, setEvents } = useContext(AppContext);
+  const loc = useLocation();
+  const eventId = loc.state.eventId;
+  const event = events.find((e) => e.eventId === eventId);
   const navigate = useNavigate();
-  const { setEvents } = useContext(AppContext);
+  const { user, isLoading } = useAuth0();
 
-  const [image, setImage] = useState<string | null>(null);
+  const [image, setImage] = useState<string | null>(event.imagePath);
   const [imageFile, setImageFile] = useState<File | null>(null);
-  const [title, setTitle] = useState<string>("");
-  const [location, setLocation] = useState<string>("");
-  const [startTime, setStartTime] = useState<string>(
-    dayjs().format("YYYY-MM-DDTHH:mm")
+  const [title, setTitle] = useState<string>(event.title);
+  const [location, setLocation] = useState<string>(event.location);
+  const [startTime, setStartTime] = useState<string>(event.startTime);
+  const [endTime, setEndTime] = useState<string>(event.endTime);
+  const [maxParticipants, setMaxParticipants] = useState<number>(
+    event.maxParticipants
   );
-  const [endTime, setEndTime] = useState<string>("");
-  const [maxParticipants, setMaxParticipants] = useState<number>(0);
-  const [description, setDescription] = useState<string>("");
+  const [description, setDescription] = useState<string>(event.description);
 
   // Inputs validation
   const [titleError, setTitleError] = useState(false);
@@ -64,7 +67,7 @@ const CreateEvent = () => {
     return true;
   };
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleUpdate = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!validateInput()) {
       return;
@@ -75,8 +78,10 @@ const CreateEvent = () => {
 
     if (imageFile) {
       formData.append("File", imageFile);
+    } else if (event?.imagePath) {
+      formData.append("ImagePath", event.imagePath);
     }
-
+    formData.append("EventId", eventId);
     formData.append("Title", title);
     formData.append("Location", location);
     formData.append("StartTime", startTime);
@@ -90,18 +95,14 @@ const CreateEvent = () => {
     console.log("formData", Array.from(formData.entries()));
 
     try {
-      const response = await axios.post(
-        "http://localhost:5184/api/event",
-        formData
-      );
-      console.log("response", response.data);
+      await axios.put(`http://localhost:5184/api/event/${eventId}`, formData);
 
-      // Add the new event to the state and then navigate to the edit-events page
-      setEvents((prevEvents) => {
-        const newEvents = [...prevEvents, response.data];
-        navigate("/edit-events");
-        return newEvents;
-      });
+      // Fetch the updated events from the server
+      const response = await axios.get("http://localhost:5184/api/event");
+      setEvents(response.data);
+
+      // Navigate to the edit-events page
+      navigate("/edit-events");
     } catch (error) {
       console.error(error);
     }
@@ -121,7 +122,7 @@ const CreateEvent = () => {
       <NavBar />
       <Container maxWidth="md" sx={{ mt: 2 }}>
         <Typography fontSize={18} marginBottom={2}>
-          Create Event
+          Update Event
         </Typography>
         <Box
           component="form"
@@ -248,9 +249,9 @@ const CreateEvent = () => {
             <Button
               variant="contained"
               sx={{ maxWidth: "200px" }}
-              onClick={handleSubmit}
+              onClick={handleUpdate}
             >
-              Create
+              Save
             </Button>
           </Box>
         </Box>
@@ -259,4 +260,4 @@ const CreateEvent = () => {
   );
 };
 
-export default CreateEvent;
+export default UpdateEvent;

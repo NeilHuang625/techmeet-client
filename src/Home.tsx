@@ -10,7 +10,7 @@ const Home: React.FC = () => {
   return (
     <>
       <NavBar />
-      <Container maxWidth="md" sx={{ mt: 2 }}>
+      <Container maxWidth="md" sx={{ mt: 2, mb: 4 }}>
         <Grid container spacing={2}>
           {events.map((event, index) => (
             <Grid item xs={4} key={index}>
