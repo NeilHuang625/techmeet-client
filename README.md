@@ -1,31 +1,29 @@
 # techmeet-client
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## Brief Introduction
+TechMeet is a web project that provides a platform for organisers to post information about IT-
+themed events. This information can include images, text, or links. 
 
-Currently, two official plugins are available:
+This system consists of three main components: the front end, the back end, and the database. For the front end, the system uses Vite to create a React framework. The back end is built using ASP.NET Core and C# to create the server and APIs, adopting the Model-View-Controller (MVC) pattern to
+manage the back-end files. The database uses SQL Server and employs Transact-SQL for data operations.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## One thing I am very proud of
+Studying C# is very challenging, but after these days of learning, I have discovered its advantages compared to other languages. It has comprehensive development tools and packages, like EF Core, and it manages and inspects code well, saving a lot of time in finding bugs. Moreover, Azure is very powerful; I use Azure Blob Storage for my images, which is very handy. I am proud of myself for not being intimidated by C#, facing the challenges, and ultimately discovering the strength of the ASP.NET ecosystem.
 
-## Expanding the ESLint configuration
+## Basic & Advanced features
+The project supports basic CRUD operations for events. Regarding the screen theme, users can choose between light and dark modes, enhancing the user experience. The project supports user authentication and renders appropriate functionalities, preventing unauthorized users from accessing pages that require authentication. The forms have validation functionality.
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+## How to run the project
+### Backend:
+Execute Database Migration: This project uses Entity Framework Core.
 
-- Configure the top-level `parserOptions` property like this:
+Install project dependencies: dotnet restore
+### Frontend:
+I did not set up a separate .env file, so it is very straightforward:
+Clone the repository:
 
-```js
-export default {
-  // other rules...
-  parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    project: ['./tsconfig.json', './tsconfig.node.json'],
-    tsconfigRootDir: __dirname,
-  },
-}
-```
+Navigate to the project directory:
 
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
+Install dependencies: npm install
 
+npm run dev
