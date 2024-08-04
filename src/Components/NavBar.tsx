@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import Paper from "@mui/material/Paper";
 import InputBase from "@mui/material/InputBase";
 import IconButton from "@mui/material/IconButton";
@@ -11,6 +12,7 @@ import { useTheme } from "../Contexts/ThemeProvider";
 const NavBar = () => {
   const { theme, toggleTheme } = useTheme();
   const [search, setSearch] = useState("");
+  const navigate = useNavigate();
 
   const handleSearchChange = (evt: React.ChangeEvent<HTMLInputElement>) => {
     setSearch(evt.target.value);
@@ -20,7 +22,12 @@ const NavBar = () => {
     <Box borderBottom={1} borderColor="#bdbdbd" boxShadow={1} borderRadius={3}>
       <Grid container spacing={2} alignItems="center">
         <Grid item xs={3}>
-          <Typography variant="h4" paddingLeft={2}>
+          <Typography
+            variant="h4"
+            paddingLeft={2}
+            onClick={() => navigate("/")}
+            style={{ cursor: "pointer" }}
+          >
             TechMeet
           </Typography>
         </Grid>

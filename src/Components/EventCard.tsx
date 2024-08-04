@@ -30,7 +30,7 @@ const EventCard: React.FC<EventCardProps> = ({ event }) => {
         </Typography>
       </CardContent>
       <CardActions>
-        <Button size="small">Join In</Button>
+        <Button size="small">Attend</Button>
       </CardActions>
     </Card>
   );

@@ -92,13 +92,13 @@ const CreateEvent = () => {
         "http://localhost:5184/api/event",
         formData
       );
-      console.log(response.data);
+      console.log("response", response.data);
+
+      // Redirect to the edit-events page with the userId
       navigate("/edit-events");
     } catch (error) {
       console.error(error);
     }
-
-    console.log("image", image);
   };
 
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {

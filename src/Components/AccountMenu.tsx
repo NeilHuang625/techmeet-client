@@ -116,7 +116,12 @@ export default function AccountMenu() {
           <VisibilityIcon fontSize="inherit" />
           View Events
         </MenuItem>
-        <MenuItem>
+        <MenuItem
+          onClick={() => {
+            handleClose();
+            navigate("/edit-events");
+          }}
+        >
           <EditIcon fontSize="inherit" />
           Edit Events
         </MenuItem>
